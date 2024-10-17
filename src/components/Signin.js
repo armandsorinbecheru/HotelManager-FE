@@ -8,53 +8,57 @@ const Signin = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const handleGoBack  = () => {
-        navigate('/');
-    };
-
     const handleSignin = async (e) => {
         e.preventDefault();
-
         try {
             const response = await axios.post('http://localhost:8080/api/auth/signin', {
                 email,
                 password,
             });
-
             localStorage.setItem('token', response.data.token);
-
             navigate('/welcome');
         } catch (error) {
             setError('Invalid email or password. Please try again.');
         }
     };
 
+    const handleGoBack = () => {
+        navigate('/');
+    };
+
     return (
-        <div>
-            <h2>Sign In</h2>
+        <div className="container">
+            <div className="header">
+                <h2>Sign In to MyCorsa</h2>
+                <p>Access your account and manage your stay effortlessly.</p>
+            </div>
             <form onSubmit={handleSignin}>
-                <div>
-                    <label>Email:</label>
+                <div className="mb-3">
+                    <label>Email</label>
                     <input
                         type="email"
+                        className="form-control"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
                     />
                 </div>
-                <div>
-                    <label>Password:</label>
+                <div className="mb-3">
+                    <label>Password</label>
                     <input
                         type="password"
+                        className="form-control"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
                 </div>
-                <button type="submit">Sign In</button>
-                <button type="button" onClick={handleGoBack}>Go back to the main page</button>
+                <button type="submit" className="btn btn-primary">Sign In</button>
+                <button type="button" className="btn btn-secondary ms-2" onClick={handleGoBack}>
+                    Go Back
+                </button>
             </form>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {error && <p className="message text-danger">{error}</p>}
         </div>
     );
 };

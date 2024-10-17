@@ -1,26 +1,19 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Welcome = () => {
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            navigate('/signin');
-        }
-    }, [navigate]);
-
     const handleSignOut = () => {
         localStorage.removeItem('token');
-        navigate('/');
+        navigate('/signin');
     };
 
     return (
-        <div>
-            <h2>It worked!!</h2>
-            <p>You are signed in.</p>
-            <button onClick={handleSignOut}>Sign Out</button>
+        <div className="container text-center">
+            <h2>Welcome to MyCorsa</h2>
+            <p>We're happy to assist you during your stay!</p>
+            <button className="btn btn-danger" onClick={handleSignOut}>Sign Out</button>
         </div>
     );
 };

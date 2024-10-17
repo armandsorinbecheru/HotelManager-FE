@@ -7,20 +7,13 @@ const Signup = () => {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [role, setRole] = useState('USER');
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
 
-    const handleGoBack  = () => {
-        navigate('/');
-    };
-
     const handleSignup = async (e) => {
         e.preventDefault();
-
         try {
             const role = 'USER';
-
             const response = await axios.post('http://localhost:8080/api/auth/signup', {
                 firstName,
                 lastName,
@@ -29,7 +22,6 @@ const Signup = () => {
                 role,
             });
             setMessage('Signup successful! Please sign in.');
-
             setTimeout(() => {
                 navigate('/signin');
             }, 2000);
@@ -39,49 +31,58 @@ const Signup = () => {
     };
 
     return (
-        <div>
-            <h2>Sign Up</h2>
+        <div className="container">
+            <div className="header">
+                <h2>Sign Up for MyCorsa</h2>
+                <p>Enjoy a seamless experience managing your stay with us.</p>
+            </div>
             <form onSubmit={handleSignup}>
-                <div>
-                    <label>First Name:</label>
+                <div className="mb-3">
+                    <label>First Name</label>
                     <input
                         type="text"
+                        className="form-control"
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
                         required
                     />
                 </div>
-                <div>
-                    <label>Last Name:</label>
+                <div className="mb-3">
+                    <label>Last Name</label>
                     <input
                         type="text"
+                        className="form-control"
                         value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
                         required
                     />
                 </div>
-                <div>
-                    <label>Email:</label>
+                <div className="mb-3">
+                    <label>Email</label>
                     <input
                         type="email"
+                        className="form-control"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
                     />
                 </div>
-                <div>
-                    <label>Password:</label>
+                <div className="mb-3">
+                    <label>Password</label>
                     <input
                         type="password"
+                        className="form-control"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
                 </div>
-                <button type="submit">Sign Up</button>
-                <button type="button" onClick={handleGoBack}>Go back to the main page</button>
+                <button type="submit" className="btn btn-primary">Sign Up</button>
+                <button type="button" className="btn btn-secondary ms-2" onClick={() => navigate('/')}>
+                    Go Back
+                </button>
             </form>
-            {message && <p>{message}</p>}
+            {message && <p className="message">{message}</p>}
         </div>
     );
 };
